@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savia Territorial · Consultoría Ambiental</title>
+<meta name="description" content="Consultoría ambiental con especialización en geomática aplicada (SIG y teledetección). Córdoba, Argentina. EIA, bosque nativo, auditorías, municipios y más.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --verde: #2D6A4F; --verde-medio: #40916C; --verde-claro: #74C69D;
+    --verde-suave: #D8F3DC; --tierra: #6B4226; --tierra-claro: #A67C52;
+    --crema: #F8F4EE; --crema-oscura: #EDE8DE; --texto: #1C2B20;
+    --texto-medio: #4A5E52; --texto-claro: #8A9E92; --acento: #B5C99A;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--crema); color: var(--texto); line-height: 1.7; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(248,244,238,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--crema-oscura);
+    padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--verde); line-height: 1.1; letter-spacing: 0.5px; }
+  .logo-sub { font-family: 'Nunito', sans-serif; font-size: 9px; letter-spacing: 3px; color: var(--tierra-claro); text-transform: uppercase; font-weight: 500; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--texto-medio); text-decoration: none; font-weight: 400; letter-spacing: 0.3px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--verde); }
+  .nav-cta { background: var(--verde); color: white; padding: 9px 22px; border-radius: 24px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--verde-medio); }
+
+  /* HERO */
+  #inicio {
+    min-height: 100vh; display: flex; align-items: center;
+    background: linear-gradient(160deg, var(--crema) 55%, var(--verde-suave) 100%);
+    padding: 120px 8% 90px; position: relative; overflow: hidden;
+  }
+  .hero-bg-circle { position: absolute; right: -80px; top: 50%; transform: translateY(-50%); width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(116,198,157,0.15) 0%, transparent 70%); pointer-events: none; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1100px; margin: 0 auto; width: 100%; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--verde-suave); border: 1px solid var(--acento); color: var(--verde); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; margin-bottom: 24px; letter-spacing: 0.5px; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--verde); border-radius: 50%; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 56px; line-height: 1.1; font-weight: 600; color: var(--texto); margin-bottom: 20px; }
+  h1 span { color: var(--verde); font-style: italic; }
+  .hero-desc { font-size: 16px; color: var(--texto-medio); margin-bottom: 36px; max-width: 440px; font-weight: 300; line-height: 1.8; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary { background: var(--verde); color: white; padding: 13px 28px; border-radius: 28px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; font-family: 'Nunito', sans-serif; letter-spacing: 0.3px; display: inline-block; }
+  .btn-primary:hover { background: var(--verde-medio); transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--verde); padding: 12px 28px; border-radius: 28px; font-size: 14px; font-weight: 500; text-decoration: none; border: 1.5px solid var(--verde); transition: all 0.2s; letter-spacing: 0.3px; display: inline-block; }
+  .btn-outline:hover { background: var(--verde-suave); }
+  .hero-stats { display: flex; gap: 32px; margin-top: 48px; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--verde); font-weight: 600; line-height: 1; }
+  .stat-label { font-size: 11px; color: var(--texto-claro); letter-spacing: 1px; margin-top: 4px; text-transform: uppercase; font-weight: 500; }
+  .hero-visual { background: white; border-radius: 24px; padding: 32px; border: 1px solid var(--crema-oscura); box-shadow: 0 20px 60px rgba(45,106,79,0.08); }
+  .hero-map-placeholder { background: var(--verde-suave); border-radius: 16px; height: 220px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .hero-map-label { font-size: 13px; font-weight: 500; color: var(--verde); }
+  .hero-map-sub { font-size: 12px; color: var(--verde-medio); font-weight: 300; }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--crema); border: 1px solid var(--crema-oscura); border-radius: 20px; padding: 5px 13px; font-size: 12px; color: var(--texto-medio); font-weight: 400; }
+  .chip-green { background: var(--verde-suave); border-color: var(--acento); color: var(--verde); }
+
+  /* SECCIONES */
+  section { padding: 90px 8%; }
+  .section-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--tierra-claro); font-weight: 600; margin-bottom: 12px; }
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 600; color: var(--texto); margin-bottom: 16px; line-height: 1.15; }
+  h2 em { color: var(--verde); font-style: italic; }
+  .section-header { max-width: 600px; margin: 0 auto 56px; text-align: center; }
+  .section-header p { font-size: 15px; color: var(--texto-medio); font-weight: 300; margin-top: 12px; line-height: 1.8; }
+
+  /* SOBRE */
+  #sobre { background: white; }
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 70px; align-items: center; max-width: 1100px; margin: 0 auto; }
+  .sobre-foto-wrap { position: relative; }
+  .sobre-foto { background: var(--verde-suave); border-radius: 20px; height: 420px; display: flex; align-items: center; justify-content: center; }
+  .sobre-badge { position: absolute; bottom: -16px; right: -16px; background: white; border: 1px solid var(--crema-oscura); border-radius: 14px; padding: 14px 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .sobre-badge-title { font-size: 13px; font-weight: 600; color: var(--texto); }
+  .sobre-badge-sub { font-size: 11px; color: var(--texto-claro); margin-top: 2px; font-weight: 300; }
+  .sobre-texto p { font-size: 15px; color: var(--texto-medio); margin-bottom: 16px; font-weight: 300; line-height: 1.85; }
+  .sobre-texto strong { color: var(--texto); font-weight: 600; }
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+  .skill-item { display: flex; align-items: flex-start; gap: 10px; background: var(--crema); border-radius: 10px; padding: 12px 14px; }
+  .skill-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verde); margin-top: 8px; flex-shrink: 0; }
+  .skill-text { font-size: 13px; color: var(--texto-medio); font-weight: 400; }
+
+  /* SERVICIOS */
+  #servicios { background: var(--crema); }
+  .servicios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; }
+  .servicio-card { background: white; border-radius: 20px; padding: 32px 28px; border: 1px solid var(--crema-oscura); transition: all 0.3s; }
+  .servicio-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(45,106,79,0.1); border-color: var(--acento); }
+  .serv-icon { width: 50px; height: 50px; border-radius: 14px; background: var(--verde-suave); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .serv-icon svg { width: 22px; height: 22px; }
+  .serv-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--texto); margin-bottom: 10px; line-height: 1.2; }
+  .serv-desc { font-size: 13px; color: var(--texto-medio); line-height: 1.75; font-weight: 300; }
+  .serv-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+  .serv-tag { background: var(--crema); border: 1px solid var(--crema-oscura); border-radius: 12px; padding: 4px 10px; font-size: 11px; color: var(--texto-medio); }
+
+  /* CLIENTES */
+  #clientes { background: white; padding: 80px 8%; }
+  .clientes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1100px; margin: 0 auto; }
+  .cliente-card { background: var(--crema); border-radius: 16px; padding: 24px 20px; text-align: center; border: 1px solid var(--crema-oscura); transition: all 0.2s; }
+  .cliente-card:hover { background: var(--verde-suave); border-color: var(--acento); }
+  .cliente-icono { font-size: 26px; margin-bottom: 12px; }
+  .cliente-tipo { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; color: var(--texto); margin-bottom: 6px; }
+  .cliente-desc { font-size: 12px; color: var(--texto-claro); font-weight: 300; line-height: 1.6; }
+
+  /* GEOMATICA */
+  #geomatica { background: var(--verde); }
+  .geo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; max-width: 1100px; margin: 0 auto; }
+  .geo-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--verde-claro); font-weight: 600; margin-bottom: 12px; }
+  .geo-title { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: white; margin-bottom: 16px; line-height: 1.15; }
+  .geo-desc { font-size: 15px; color: rgba(255,255,255,0.72); font-weight: 300; margin-bottom: 28px; line-height: 1.8; }
+  .geo-items { display: flex; flex-direction: column; gap: 14px; }
+  .geo-item { display: flex; align-items: center; gap: 12px; }
+  .geo-bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--verde-claro); flex-shrink: 0; }
+  .geo-item-text { font-size: 14px; color: rgba(255,255,255,0.82); font-weight: 300; }
+  .geo-visual { background: rgba(255,255,255,0.09); border-radius: 20px; padding: 28px; border: 1px solid rgba(255,255,255,0.18); }
+  .geo-layers { display: flex; flex-direction: column; gap: 10px; }
+  .geo-layer { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.07); border-radius: 10px; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.1); }
+  .layer-color { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+  .layer-name { font-size: 13px; color: rgba(255,255,255,0.82); font-weight: 300; }
+  .layer-type { font-size: 11px; color: rgba(255,255,255,0.4); margin-left: auto; letter-spacing: 0.5px; }
+
+  /* CONTACTO */
+  #contacto { background: var(--crema); }
+  .contacto-wrap { max-width: 700px; margin: 0 auto; }
+  .contacto-form { background: white; border-radius: 24px; padding: 44px; border: 1px solid var(--crema-oscura); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { font-size: 12px; font-weight: 600; color: var(--texto-medio); letter-spacing: 0.5px; text-transform: uppercase; }
+  input, select, textarea { border: 1.5px solid var(--crema-oscura); border-radius: 10px; padding: 12px 14px; font-size: 14px; color: var(--texto); font-family: 'Nunito', sans-serif; background: var(--crema); transition: border-color 0.2s; outline: none; font-weight: 300; width: 100%; }
+  input:focus, select:focus, textarea:focus { border-color: var(--verde); background: white; }
+  textarea { resize: vertical; min-height: 120px; }
+  .form-submit { background: var(--verde); color: white; border: none; padding: 15px 32px; border-radius: 28px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; margin-top: 8px; transition: background 0.2s; font-family: 'Nunito', sans-serif; letter-spacing: 0.5px; }
+  .form-submit:hover { background: var(--verde-medio); }
+  .form-submit:disabled { background: var(--texto-claro); cursor: not-allowed; }
+  .form-note { font-size: 12px; color: var(--texto-claro); text-align: center; margin-top: 12px; font-weight: 300; }
+  .contacto-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+  .info-item { background: white; border-radius: 14px; padding: 20px; text-align: center; border: 1px solid var(--crema-oscura); }
+  .info-icon { width: 40px; height: 40px; background: var(--verde-suave); border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; }
+  .info-icon svg { width: 18px; height: 18px; }
+  .info-label { font-size: 11px; color: var(--texto-claro); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+  .info-val { font-size: 13px; font-weight: 500; color: var(--texto); }
+  .info-val a { color: var(--texto); text-decoration: none; }
+  .info-val a:hover { color: var(--verde); }
+
+  /* ESTADOS FORMULARIO */
+  .form-sending { display: none; text-align: center; padding: 20px 0; }
+  .form-success { display: none; text-align: center; padding: 40px; }
+  .form-success .check { width: 56px; height: 56px; background: var(--verde-suave); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .form-success h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--verde); margin-bottom: 8px; }
+  .form-success p { font-size: 14px; color: var(--texto-medio); font-weight: 300; }
+  .form-error { display: none; background: #fff0f0; border: 1px solid #ffd0d0; border-radius: 10px; padding: 14px; margin-top: 12px; font-size: 13px; color: #c0392b; text-align: center; }
+
+  /* FOOTER */
+  footer { background: var(--texto); color: rgba(255,255,255,0.7); padding: 48px 8% 32px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; max-width: 1100px; margin: 0 auto 40px; }
+  .footer-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--verde-claro); line-height: 1.1; }
+  .footer-logo-sub { font-size: 9px; letter-spacing: 3px; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-top: 2px; }
+  .footer-desc { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 14px; line-height: 1.75; max-width: 280px; font-weight: 300; }
+  .footer-col h4 { font-size: 11px; font-weight: 600; color: white; margin-bottom: 16px; letter-spacing: 2px; text-transform: uppercase; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; font-weight: 300; }
+  .footer-col ul a:hover { color: var(--verde-claro); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; flex-wrap: wrap; gap: 8px; }
+  .footer-bottom span { font-size: 12px; color: rgba(255,255,255,0.25); font-weight: 300; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-grid, .sobre-grid, .geo-grid, .footer-grid { grid-template-columns: 1fr; }
+    .servicios-grid { grid-template-columns: repeat(2, 1fr); }
+    .clientes-grid { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 40px; }
+    h2 { font-size: 34px; }
+    .nav-links { display: none; }
+    .sobre-foto { height: 300px; }
+    .sobre-badge { position: static; margin-top: 16px; }
+  }
+  @media (max-width: 600px) {
+    .servicios-grid, .clientes-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .contacto-info { grid-template-columns: 1fr; }
+    .hero-stats { gap: 20px; }
+    .contacto-form { padding: 28px 20px; }
+    section { padding: 60px 5%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     NAVEGACIÓN
+══════════════════════════════════ -->
+<nav>
+  <a href="#inicio" class="nav-logo">
+    <!-- LOGO SVG -->
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="19" cy="19" r="19" fill="#2D6A4F"/>
+      <!-- Tallo central -->
+      <line x1="19" y1="32" x2="19" y2="14" stroke="#D8F3DC" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Hoja izquierda -->
+      <path d="M19 22 C14 20 10 14 12 9 C14 13 17 18 19 22Z" fill="#74C69D"/>
+      <!-- Hoja derecha -->
+      <path d="M19 18 C24 16 28 10 26 6 C24 10 21 15 19 18Z" fill="#B5C99A"/>
+      <!-- Hoja pequeña izquierda -->
+      <path d="M19 14 C16 13 13 10 14 7 C15 9 17 12 19 14Z" fill="#40916C"/>
+      <!-- Raíces / territorio -->
+      <path d="M14 32 Q19 29 24 32" stroke="#B5C99A" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      <path d="M11 34 Q19 30 27 34" stroke="#74C69D" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+    </svg>
+    <div>
+      <div class="logo-text">Savia Territorial</div>
+      <div class="logo-sub">Consultoría Ambiental</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#geomatica">Geomática</a></li>
+    <li><a href="#clientes">Clientes</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Contactar</a>
+</nav>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section id="inicio">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge">Consultoría ambiental · Córdoba, Argentina</div>
+      <h1>Gestión ambiental <span>con visión territorial</span></h1>
+      <p class="hero-desc">Acompañamos a empresas, municipios, productores rurales y organizaciones a tomar decisiones basadas en evidencia y geomática aplicada al territorio.</p>
+      <div class="hero-btns">
+        <a href="#contacto" class="btn-primary">Consultá tu proyecto</a>
+        <a href="#servicios" class="btn-outline">Ver servicios</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">SIG</div><div class="stat-label">Análisis territorial</div></div>
+        <div class="stat-item"><div class="stat-num">EIA</div><div class="stat-label">Evaluación de impacto</div></div>
+        <div class="stat-item"><div class="stat-num">ISO</div><div class="stat-label">Gestión ambiental</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-map-placeholder">
+        <svg width="58" height="58" viewBox="0 0 60 60" fill="none">
+          <rect x="5" y="5" width="50" height="50" rx="8" fill="rgba(45,106,79,0.15)" stroke="#2D6A4F" stroke-width="1.5"/>
+          <circle cx="30" cy="28" r="8" fill="rgba(45,106,79,0.28)" stroke="#2D6A4F" stroke-width="1.5"/>
+          <path d="M30 20v-6M30 42v-6M20 28h-6M46 28h-6" stroke="#2D6A4F" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="18" cy="18" r="3" fill="#40916C"/>
+          <circle cx="42" cy="38" r="3" fill="#40916C"/>
+          <circle cx="38" cy="16" r="2" fill="#74C69D"/>
+        </svg>
+        <div class="hero-map-label">Análisis SIG · Provincia de Córdoba</div>
+        <div class="hero-map-sub">Teledetección y cartografía ambiental</div>
+      </div>
+      <div class="hero-chips">
+        <span class="chip chip-green">Bosque nativo</span>
+        <span class="chip chip-green">Cuencas hídricas</span>
+        <span class="chip">Ordenamiento territorial</span>
+        <span class="chip">Áreas protegidas</span>
+        <span class="chip chip-green">Teledetección</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SOBRE MÍ
+══════════════════════════════════ -->
+<section id="sobre" style="padding:100px 8%;">
+  <div class="sobre-grid">
+    <div class="sobre-foto-wrap">
+      <div class="sobre-foto">
+        <!-- Logo grande centrado en lugar de foto -->
+        <svg width="130" height="130" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="19" cy="19" r="19" fill="#2D6A4F" opacity="0.15"/>
+          <line x1="19" y1="34" x2="19" y2="12" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round"/>
+          <path d="M19 24 C11 21 6 12 9 5 C12 12 16 20 19 24Z" fill="#74C69D"/>
+          <path d="M19 19 C27 16 32 7 29 1 C26 8 22 15 19 19Z" fill="#B5C99A"/>
+          <path d="M19 14 C15 13 11 9 12 4 C14 7 17 11 19 14Z" fill="#40916C"/>
+          <path d="M12 34 Q19 30 26 34" stroke="#B5C99A" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <path d="M8 36 Q19 31 30 36" stroke="#74C69D" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="sobre-badge">
+        <div class="sobre-badge-title">Lic. en Gestión Ambiental</div>
+        <div class="sobre-badge-sub">Especialista en Geomática · SIG y Teledetección</div>
+      </div>
+    </div>
+    <div class="sobre-texto">
+      <div class="section-tag">Quién soy</div>
+      <h2>Experta en territorio, <em>apasionada por el ambiente</em></h2>
+      <p>Soy Licenciada en Gestión Ambiental con especialización en Geomática Aplicada (SIG y teledetección), radicada en Córdoba. Trabajo en la intersección entre el análisis territorial de precisión y la gestión ambiental estratégica.</p>
+      <p>Mi enfoque es <strong>técnico pero cercano</strong>: cada proyecto es un territorio con sus propias lógicas, actores y desafíos. Combino rigor científico con una mirada integral que contempla lo ambiental, lo social y lo productivo.</p>
+      <p>Trabajo con propietarios rurales, industrias, comunas y organizaciones de la sociedad civil en toda la región centro de Argentina.</p>
+      <div class="skills-grid">
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-text">SIG y cartografía ambiental</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-text">Evaluación de Impacto Ambiental</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-text">Gestión de bosque nativo</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-text">Auditorías ambientales</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-text">Teledetección satelital</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-text">Normativa ambiental · Ley 26.331</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SERVICIOS
+══════════════════════════════════ -->
+<section id="servicios">
+  <div class="section-header">
+    <div class="section-tag">Lo que hago</div>
+    <h2>Servicios <em>ambientales</em> integrales</h2>
+    <p>Soluciones a medida para cada tipo de cliente y territorio, con base en geomática y normativa ambiental vigente.</p>
+  </div>
+  <div class="servicios-grid">
+    <div class="servicio-card">
+      <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <div class="serv-title">Evaluación de Impacto Ambiental</div>
+      <div class="serv-desc">Elaboración de EIA, IIA y manifiestos ambientales para proyectos productivos, industriales e infraestructura. Tramitación ante organismos provinciales.</div>
+      <div class="serv-tags"><span class="serv-tag">Empresas</span><span class="serv-tag">Industria</span><span class="serv-tag">Construcción</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="1.8"><path d="M17 8C8 10 5.9 16.17 3.82 19.5M9 16c0-5 4-9 8-9M21 8a9 9 0 01-9 13"/></svg></div>
+      <div class="serv-title">Gestión de Bosque Nativo</div>
+      <div class="serv-desc">Planes de manejo y conservación bajo Ley 26.331. Relevamiento con SIG y teledetección. Acompañamiento a productores para cumplimiento normativo y acceso a compensaciones.</div>
+      <div class="serv-tags"><span class="serv-tag">Campos</span><span class="serv-tag">Ley 26.331</span><span class="serv-tag">Rural</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <div class="serv-title">Auditorías Ambientales</div>
+      <div class="serv-desc">Diagnósticos ambientales, auditorías de cumplimiento y due diligence. Acompañamiento en procesos de certificación ISO 14001 y otras normas de gestión.</div>
+      <div class="serv-tags"><span class="serv-tag">ISO 14001</span><span class="serv-tag">Industria</span><span class="serv-tag">Compliance</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="serv-title">Asesoramiento a Municipios</div>
+      <div class="serv-desc">Planes ambientales municipales, ordenanzas, gestión de RSU y economía circular. Fortalecimiento de capacidades institucionales locales.</div>
+      <div class="serv-tags"><span class="serv-tag">Municipios</span><span class="serv-tag">Comunas</span><span class="serv-tag">Residuos</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="serv-title">Gestión de Residuos</div>
+      <div class="serv-desc">Diagnósticos y planes de gestión de residuos para empresas, agroindustria y municipios. Estrategias de economía circular y valorización.</div>
+      <div class="serv-tags"><span class="serv-tag">Empresas</span><span class="serv-tag">Agroindustria</span><span class="serv-tag">Circular</span></div>
+    </div>
+    <div class="servicio-card">
+      <div class="serv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+      <div class="serv-title">Consultoría para OSC</div>
+      <div class="serv-desc">Acompañamiento técnico a organizaciones civiles en proyectos ambientales, formulación de propuestas para financiamiento y participación en gestión pública.</div>
+      <div class="serv-tags"><span class="serv-tag">OSC</span><span class="serv-tag">Proyectos</span><span class="serv-tag">Financiamiento</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CLIENTES
+══════════════════════════════════ -->
+<section id="clientes">
+  <div class="section-header">
+    <div class="section-tag">Con quiénes trabajo</div>
+    <h2>Clientes y <em>sectores</em></h2>
+  </div>
+  <div class="clientes-grid">
+    <div class="cliente-card"><div class="cliente-icono">🌾</div><div class="cliente-tipo">Propietarios rurales</div><div class="cliente-desc">Gestión de bosque nativo, planes de manejo y cumplimiento Ley 26.331</div></div>
+    <div class="cliente-card"><div class="cliente-icono">🏭</div><div class="cliente-tipo">Industrias y empresas</div><div class="cliente-desc">EIA, auditorías, ISO 14001 y gestión ambiental corporativa</div></div>
+    <div class="cliente-card"><div class="cliente-icono">🏛️</div><div class="cliente-tipo">Municipios y comunas</div><div class="cliente-desc">Planes ambientales, residuos sólidos y fortalecimiento institucional</div></div>
+    <div class="cliente-card"><div class="cliente-icono">🤝</div><div class="cliente-tipo">Organizaciones civiles</div><div class="cliente-desc">Proyectos ambientales, formulación de propuestas y gestión territorial</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     GEOMÁTICA
+══════════════════════════════════ -->
+<section id="geomatica">
+  <div class="geo-grid">
+    <div>
+      <div class="geo-tag">Diferencial</div>
+      <div class="geo-title">Geomática aplicada al territorio</div>
+      <div class="geo-desc">Mi especialización en SIG y teledetección me permite ofrecer análisis espaciales precisos que potencian la toma de decisiones ambientales.</div>
+      <div class="geo-items">
+        <div class="geo-item"><div class="geo-bullet"></div><div class="geo-item-text">Mapeo de cobertura vegetal y uso del suelo</div></div>
+        <div class="geo-item"><div class="geo-bullet"></div><div class="geo-item-text">Análisis multitemporal de cambios del bosque</div></div>
+        <div class="geo-item"><div class="geo-bullet"></div><div class="geo-item-text">Modelos de riesgo ambiental y erosión</div></div>
+        <div class="geo-item"><div class="geo-bullet"></div><div class="geo-item-text">Cartografía para EIA y planes de manejo</div></div>
+        <div class="geo-item"><div class="geo-bullet"></div><div class="geo-item-text">Monitoreo satelital de ecosistemas</div></div>
+        <div class="geo-item"><div class="geo-bullet"></div><div class="geo-item-text">Integración con datos del OTBN de Córdoba</div></div>
+      </div>
+    </div>
+    <div class="geo-visual">
+      <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:16px;letter-spacing:2px;text-transform:uppercase;font-weight:600;">Capas de análisis SIG</div>
+      <div class="geo-layers">
+        <div class="geo-layer"><div class="layer-color" style="background:#74C69D"></div><div class="layer-name">Bosque nativo categorizado</div><div class="layer-type">Vectorial</div></div>
+        <div class="geo-layer"><div class="layer-color" style="background:#40916C"></div><div class="layer-name">NDVI · Índice de vegetación</div><div class="layer-type">Raster</div></div>
+        <div class="geo-layer"><div class="layer-color" style="background:#A67C52"></div><div class="layer-name">Cuencas y subcuencas hídricas</div><div class="layer-type">Vectorial</div></div>
+        <div class="geo-layer"><div class="layer-color" style="background:#B5C99A"></div><div class="layer-name">Áreas protegidas provinciales</div><div class="layer-type">Vectorial</div></div>
+        <div class="geo-layer"><div class="layer-color" style="background:#D8F3DC"></div><div class="layer-name">Uso del suelo · Landsat 8/9</div><div class="layer-type">Raster</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CONTACTO + FORMULARIO
+     Conectado a Google Sheets via Apps Script
+══════════════════════════════════ -->
+<section id="contacto">
+  <div class="section-header">
+    <div class="section-tag">Hablemos</div>
+    <h2>¿Tenés un proyecto <em>ambiental</em>?</h2>
+    <p>Contame de qué se trata y te cuento cómo puedo ayudarte. Sin compromisos.</p>
+  </div>
+  <div class="contacto-wrap">
+    <div class="contacto-form">
+      <div id="form-fields">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nombre">Nombre y apellido *</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="351 000 0000">
+          </div>
+          <div class="form-group">
+            <label for="tipo">Tipo de cliente</label>
+            <select id="tipo" name="tipo">
+              <option value="">Seleccioná...</option>
+              <option>Propietario/a rural</option>
+              <option>Empresa / Industria</option>
+              <option>Municipio / Comuna</option>
+              <option>Organización de la sociedad civil</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="org">Organización / Empresa / Campo</label>
+            <input type="text" id="org" name="org" placeholder="Nombre de tu empresa, campo u organización">
+          </div>
+          <div class="form-group full">
+            <label for="servicio">¿Qué servicio necesitás?</label>
+            <select id="servicio" name="servicio">
+              <option value="">Seleccioná...</option>
+              <option>Evaluación de Impacto Ambiental</option>
+              <option>Gestión de bosque nativo</option>
+              <option>Auditoría ambiental</option>
+              <option>Asesoramiento a municipios/comunas</option>
+              <option>Gestión de residuos</option>
+              <option>Análisis SIG / Geomática</option>
+              <option>Consultoría para OSC</option>
+              <option>No sé, necesito orientación</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="mensaje">Contame de tu proyecto *</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Describí brevemente tu situación o necesidad. Cuanto más detalle, mejor podré orientarte." required></textarea>
+          </div>
+        </div>
+        <div class="form-error" id="form-error">Hubo un error al enviar. Por favor intentá de nuevo o escribime directamente a m.sosa.ambiente@gmail.com</div>
+        <button class="form-submit" id="btn-submit" onclick="enviarFormulario()">Enviar consulta</button>
+        <p class="form-note">Respondemos en menos de 48 horas hábiles · Tu información es confidencial</p>
+      </div>
+      <div class="form-sending" id="form-sending">
+        <p style="color:var(--texto-medio);font-size:14px;">Enviando tu consulta...</p>
+      </div>
+      <div class="form-success" id="form-success">
+        <div class="check">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>¡Consulta enviada!</h3>
+        <p>Gracias por escribirnos. Nos pondremos en contacto en las próximas 48 horas hábiles a tu email.</p>
+      </div>
+    </div>
+
+    <div class="contacto-info">
+      <div class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="info-label">Ubicación</div>
+        <div class="info-val">Córdoba, Argentina</div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12 19.79 19.79 0 011.61 3.38 2 2 0 013.58 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.56a16 16 0 005.64 5.64l1.63-1.63a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="info-label">WhatsApp</div>
+        <div class="info-val"><a href="https://wa.me/543516984811" target="_blank">351 698-4811</a></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="info-label">Email</div>
+        <div class="info-val"><a href="mailto:m.sosa.ambiente@gmail.com">m.sosa.ambiente@gmail.com</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <svg width="32" height="32" viewBox="0 0 38 38" fill="none">
+          <circle cx="19" cy="19" r="19" fill="rgba(116,198,157,0.2)"/>
+          <line x1="19" y1="32" x2="19" y2="14" stroke="#74C69D" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M19 24 C14 22 10 15 12 9 C14 14 17 20 19 24Z" fill="#74C69D"/>
+          <path d="M19 19 C24 17 28 10 26 5 C24 10 21 15 19 19Z" fill="#B5C99A"/>
+          <path d="M13 34 Q19 30 25 34" stroke="#B5C99A" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div>
+          <div class="footer-logo-text">Savia Territorial</div>
+          <div class="footer-logo-sub">Consultoría Ambiental</div>
+        </div>
+      </div>
+      <div class="footer-desc">Consultoría ambiental con base en geomática aplicada. Córdoba, Argentina. Trabajamos en toda la región centro del país.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="#servicios">Evaluación de impacto</a></li>
+        <li><a href="#servicios">Bosque nativo</a></li>
+        <li><a href="#servicios">Auditorías</a></li>
+        <li><a href="#servicios">Municipios</a></li>
+        <li><a href="#geomatica">Geomática SIG</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="#contacto">Formulario de consulta</a></li>
+        <li><a href="https://wa.me/543516984811" target="_blank">WhatsApp 351 698-4811</a></li>
+        <li><a href="mailto:m.sosa.ambiente@gmail.com">m.sosa.ambiente@gmail.com</a></li>
+        <li><a href="#sobre">Sobre mí</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Savia Territorial · Consultoría Ambiental · Córdoba, Argentina</span>
+    <span>Lic. en Gestión Ambiental · Especialista en Geomática</span>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════
+     JAVASCRIPT: FORMULARIO → GOOGLE SHEETS
+     
+     INSTRUCCIONES PARA ACTIVAR:
+     1. Abrí Google Sheets en drive.google.com
+     2. Creá una planilla nueva llamada "Consultas Savia Territorial"
+     3. Agregá estos encabezados en la fila 1:
+        A: Fecha | B: Nombre | C: Email | D: Teléfono | E: Tipo | F: Organización | G: Servicio | H: Mensaje
+     4. Menú Extensiones → Apps Script
+     5. Borrá el contenido y pegá el código del archivo "apps-script.gs"
+     6. Guardá, hacé clic en "Implementar" → "Nueva implementación"
+     7. Tipo: Aplicación web | Ejecutar como: Yo | Acceso: Cualquier persona
+     8. Copiá la URL de implementación
+     9. En este archivo, reemplazá PEGA_AQUI_TU_URL_DE_APPS_SCRIPT con esa URL
+══════════════════════════════════ -->
+<script>
+  // ⚠️ REEMPLAZÁ ESTA URL con la tuya de Google Apps Script (ver instrucciones arriba)
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxKiwUP8kZXTTJodzq9Y6voCzO08GztqATJi8jySMV1vyngxbe_5Kera5wZQiuqZeuVcg/exec';
+
+  async function enviarFormulario() {
+    const nombre  = document.getElementById('nombre').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const mensaje = document.getElementById('mensaje').value.trim();
+
+    if (!nombre || !email || !mensaje) {
+      alert('Por favor completá los campos obligatorios: nombre, email y mensaje.');
+      return;
+    }
+
+    const datos = {
+      nombre,
+      email,
+      telefono : document.getElementById('telefono').value.trim(),
+      tipo     : document.getElementById('tipo').value,
+      org      : document.getElementById('org').value.trim(),
+      servicio : document.getElementById('servicio').value,
+      mensaje,
+      fecha    : new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Cordoba' })
+    };
+
+    // Mostrar estado enviando
+    document.getElementById('btn-submit').disabled = true;
+    document.getElementById('btn-submit').textContent = 'Enviando...';
+    document.getElementById('form-error').style.display = 'none';
+
+    // Si no hay URL configurada, mostrar éxito local (modo demo)
+    if (APPS_SCRIPT_URL === 'PEGA_AQUI_TU_URL_DE_APPS_SCRIPT') {
+      setTimeout(() => {
+        document.getElementById('form-fields').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      }, 800);
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      Object.keys(datos).forEach(k => formData.append(k, datos[k]));
+
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+      });
+
+      document.getElementById('form-fields').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+
+    } catch (error) {
+      document.getElementById('btn-submit').disabled = false;
+      document.getElementById('btn-submit').textContent = 'Enviar consulta';
+      document.getElementById('form-error').style.display = 'block';
+    }
+  }
+
+  // Permitir enviar con Enter en campos de texto
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter') enviarFormulario();
+    });
+  });
+</script>
+
+</body>
+</html>
