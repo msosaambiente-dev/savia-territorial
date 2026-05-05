@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
   :root {
     --verde: #2D6A4F; --verde-medio: #40916C; --verde-claro: #74C69D;
     --verde-suave: #D8F3DC; --tierra: #6B4226; --tierra-claro: #A67C52;
@@ -118,7 +119,7 @@
   .cliente-desc { font-size: 12px; color: var(--texto-claro); font-weight: 300; line-height: 1.6; }
 
   /* GEOMATICA */
-  #geomatica { background: var(--verde); }
+  #geomatica { background: var(--verde); overflow: hidden; }
   .geo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; max-width: 1100px; margin: 0 auto; }
   .geo-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--verde-claro); font-weight: 600; margin-bottom: 12px; }
   .geo-title { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: white; margin-bottom: 16px; line-height: 1.15; }
@@ -127,12 +128,12 @@
   .geo-item { display: flex; align-items: center; gap: 12px; }
   .geo-bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--verde-claro); flex-shrink: 0; }
   .geo-item-text { font-size: 14px; color: rgba(255,255,255,0.82); font-weight: 300; }
-  .geo-visual { background: rgba(255,255,255,0.09); border-radius: 20px; padding: 28px; border: 1px solid rgba(255,255,255,0.18); }
+  .geo-visual { background: rgba(255,255,255,0.09); border-radius: 20px; padding: 28px; border: 1px solid rgba(255,255,255,0.18); min-width: 0; }
   .geo-layers { display: flex; flex-direction: column; gap: 10px; }
-  .geo-layer { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.07); border-radius: 10px; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.1); }
+  .geo-layer { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.07); border-radius: 10px; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.1); min-width: 0; }
   .layer-color { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
-  .layer-name { font-size: 13px; color: rgba(255,255,255,0.82); font-weight: 300; }
-  .layer-type { font-size: 11px; color: rgba(255,255,255,0.4); margin-left: auto; letter-spacing: 0.5px; }
+  .layer-name { font-size: 13px; color: rgba(255,255,255,0.82); font-weight: 300; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .layer-type { font-size: 11px; color: rgba(255,255,255,0.4); margin-left: auto; letter-spacing: 0.5px; flex-shrink: 0; }
 
   /* CONTACTO */
   #contacto { background: var(--crema); }
@@ -196,8 +197,9 @@
     #inicio { padding: 100px 6% 70px; min-height: auto; }
     .hero-visual { display: none; }
     .hero-stats { flex-wrap: wrap; gap: 24px; margin-top: 36px; }
-    .geo-grid { padding: 0; }
-    .geo-visual { margin-top: 0; }
+    .geo-grid { grid-template-columns: 1fr; gap: 36px; }
+    .geo-title { font-size: 34px; }
+    .geo-visual { width: 100%; box-sizing: border-box; }
     section { padding: 72px 6%; }
     #sobre { padding: 72px 6% !important; }
     .skills-grid { grid-template-columns: 1fr 1fr; }
@@ -223,9 +225,12 @@
     .sobre-foto { height: 220px; }
     .sobre-foto svg { width: 90px; height: 90px; }
     .skills-grid { grid-template-columns: 1fr; gap: 8px; }
-    .geo-title { font-size: 32px; }
+    .geo-title { font-size: 28px; }
+    .geo-desc { font-size: 14px; }
     .geo-layers { gap: 8px; }
-    .geo-layer { padding: 10px 12px; }
+    .geo-layer { padding: 10px 12px; gap: 8px; }
+    .layer-name { font-size: 12px; }
+    .geo-visual { padding: 20px 16px; }
     .contacto-form { padding: 24px 16px; }
     .form-grid { grid-template-columns: 1fr; }
     .form-group.full { grid-column: 1; }
@@ -469,17 +474,132 @@
         <div class="geo-item"><div class="geo-bullet"></div><div class="geo-item-text">Análisis de datos geoespaciales</div></div>
       </div>
     </div>
-    <div class="geo-visual">
-      <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:16px;letter-spacing:2px;text-transform:uppercase;font-weight:600;">Capas de análisis SIG</div>
-      <div class="geo-layers">
-        <div class="geo-layer"><div class="layer-color" style="background:#74C69D"></div><div class="layer-name">Infraestructura</div><div 
-        <div class="geo-layer"><div class="layer-color" style="background:#40916C"></div><div class="layer-name">NDVI · Índice de vegetación</div><div 
-        <div class="geo-layer"><div class="layer-color" style="background:#A67C52"></div><div class="layer-name">Recursos hídricos</div><div 
-        <div class="geo-layer"><div class="layer-color" style="background:#B5C99A"></div><div class="layer-name">Áreas naturales protegidas</div><div 
-        <div class="geo-layer"><div class="layer-color" style="background:#D8F3DC"></div><div class="layer-name">Usos del suelo</div><div 
-        <div class="geo-layer"><div class="layer-color" style="background:#A67C52"></div><div class="layer-name">Red vial</div><div 
-        <div class="geo-layer"><div class="layer-color" style="background:#B5C99A"></div><div class="layer-name">Equipamientos</div><div 
-      </div>
+    <div class="geo-visual" style="background:transparent;border:none;padding:0;">
+      <svg width="100%" viewBox="0 0 680 580" role="img" xmlns="http://www.w3.org/2000/svg">
+        <title>Capas SIG – Savia Territorial</title>
+        <desc>Diagrama de capas SIG estilo flat ilustración con perspectiva isométrica</desc>
+        <defs>
+          <clipPath id="c1"><path d="M222,30 L482,30 Q488,30 492,34 L560,88 Q564,91 564,96 L304,96 Q298,96 294,92 L226,38 Q222,35 222,30 Z"/></clipPath>
+          <clipPath id="c2"><path d="M202,126 L462,126 Q468,126 472,130 L540,184 Q544,187 544,192 L284,192 Q278,192 274,188 L206,134 Q202,131 202,126 Z"/></clipPath>
+          <clipPath id="c3"><path d="M182,226 L442,226 Q448,226 452,230 L520,284 Q524,287 524,292 L264,292 Q258,292 254,288 L186,234 Q182,231 182,226 Z"/></clipPath>
+          <clipPath id="c4"><path d="M162,326 L422,326 Q428,326 432,330 L500,384 Q504,387 504,392 L244,392 Q238,392 234,388 L166,334 Q162,331 162,326 Z"/></clipPath>
+          <clipPath id="c5"><path d="M142,426 L402,426 Q408,426 412,430 L480,484 Q484,487 484,492 L224,492 Q218,492 214,488 L146,434 Q142,431 142,426 Z"/></clipPath>
+        </defs>
+
+        <!-- CAPA 1 — VECTORIAL -->
+        <path d="M222,34 L482,34 Q488,34 492,38 L560,92 Q564,95 564,100 L304,100 Q298,100 294,96 L226,42 Q222,39 222,34 Z" fill="rgba(0,0,0,0.09)" transform="translate(3,4)"/>
+        <path d="M222,30 L482,30 Q488,30 492,34 L560,88 Q564,91 564,96 L304,96 Q298,96 294,92 L226,38 Q222,35 222,30 Z" fill="#E57373"/>
+        <g clip-path="url(#c1)">
+          <rect x="220" y="28" width="345" height="78" fill="#EF5350"/>
+          <circle cx="280" cy="52" r="5" fill="#fff" opacity="0.9"/><circle cx="340" cy="44" r="5" fill="#fff" opacity="0.9"/>
+          <circle cx="390" cy="62" r="5" fill="#fff" opacity="0.9"/><circle cx="450" cy="50" r="5" fill="#fff" opacity="0.9"/>
+          <circle cx="500" cy="70" r="5" fill="#fff" opacity="0.9"/>
+          <line x1="280" y1="52" x2="340" y2="44" stroke="#fff" stroke-width="1.5" opacity="0.7" stroke-dasharray="5 3"/>
+          <line x1="340" y1="44" x2="390" y2="62" stroke="#fff" stroke-width="1.5" opacity="0.7" stroke-dasharray="5 3"/>
+          <line x1="390" y1="62" x2="450" y2="50" stroke="#fff" stroke-width="1.5" opacity="0.7" stroke-dasharray="5 3"/>
+          <line x1="450" y1="50" x2="500" y2="70" stroke="#fff" stroke-width="1.5" opacity="0.7" stroke-dasharray="5 3"/>
+          <circle cx="300" cy="78" r="3.5" fill="#FFCDD2" opacity="0.8"/><circle cx="360" cy="72" r="3.5" fill="#FFCDD2" opacity="0.8"/>
+          <circle cx="420" cy="82" r="3.5" fill="#FFCDD2" opacity="0.8"/><circle cx="480" cy="76" r="3.5" fill="#FFCDD2" opacity="0.8"/>
+        </g>
+        <path d="M222,30 L482,30 Q488,30 492,34 L560,88 Q564,91 564,96 L304,96 Q298,96 294,92 L226,38 Q222,35 222,30 Z" fill="none" stroke="#C62828" stroke-width="1.8"/>
+        <path d="M222,30 L226,38 L294,92 L304,96 L304,104 L236,50 L222,38 Z" fill="#C62828" opacity="0.35"/>
+        <path d="M304,96 L564,96 L564,104 L304,104 Z" fill="#C62828" opacity="0.2"/>
+        <line x1="304" y1="104" x2="564" y2="104" stroke="#C62828" stroke-width="0.7" opacity="0.4"/>
+
+        <!-- CAPA 2 — ÁREAS PROTEGIDAS -->
+        <path d="M202,130 L462,130 Q468,130 472,134 L540,188 Q544,191 544,196 L284,196 Q278,196 274,192 L206,138 Q202,135 202,130 Z" fill="rgba(0,0,0,0.09)" transform="translate(3,4)"/>
+        <path d="M202,126 L462,126 Q468,126 472,130 L540,184 Q544,187 544,192 L284,192 Q278,192 274,188 L206,134 Q202,131 202,126 Z" fill="#66BB6A"/>
+        <g clip-path="url(#c2)">
+          <rect x="200" y="124" width="345" height="78" fill="#4CAF50"/>
+          <polygon points="215,130 290,126 310,150 270,168 215,160" fill="#A5D6A7" opacity="0.6"/>
+          <polygon points="420,126 520,130 530,160 460,172 400,155" fill="#C8E6C9" opacity="0.55"/>
+          <g transform="translate(350,148)">
+            <path d="M0,-18 Q10,-18 10,-8 Q10,2 0,18 Q-10,2 -10,-8 Q-10,-18 0,-18 Z" fill="#fff" opacity="0.9"/>
+            <circle cx="0" cy="-8" r="5" fill="#4CAF50"/>
+          </g>
+          <g transform="translate(440,148)">
+            <path d="M0,-14 Q8,-14 8,-6 Q8,2 0,14 Q-8,2 -8,-6 Q-8,-14 0,-14 Z" fill="#fff" opacity="0.8"/>
+            <circle cx="0" cy="-6" r="4" fill="#388E3C"/>
+          </g>
+          <g transform="translate(280,162)">
+            <path d="M0,-12 Q7,-12 7,-5 Q7,2 0,12 Q-7,2 -7,-5 Q-7,-12 0,-12 Z" fill="#fff" opacity="0.75"/>
+            <circle cx="0" cy="-5" r="3.5" fill="#2E7D32"/>
+          </g>
+        </g>
+        <path d="M202,126 L462,126 Q468,126 472,130 L540,184 Q544,187 544,192 L284,192 Q278,192 274,188 L206,134 Q202,131 202,126 Z" fill="none" stroke="#2E7D32" stroke-width="1.8"/>
+        <path d="M202,126 L206,134 L274,188 L284,192 L284,200 L216,146 L202,134 Z" fill="#2E7D32" opacity="0.35"/>
+        <path d="M284,192 L544,192 L544,200 L284,200 Z" fill="#2E7D32" opacity="0.2"/>
+        <line x1="284" y1="200" x2="544" y2="200" stroke="#2E7D32" stroke-width="0.7" opacity="0.4"/>
+
+        <!-- CAPA 3 — RECURSOS HÍDRICOS -->
+        <path d="M182,230 L442,230 Q448,230 452,234 L520,288 Q524,291 524,296 L264,296 Q258,296 254,292 L186,238 Q182,235 182,230 Z" fill="rgba(0,0,0,0.09)" transform="translate(3,4)"/>
+        <path d="M182,226 L442,226 Q448,226 452,230 L520,284 Q524,287 524,292 L264,292 Q258,292 254,288 L186,234 Q182,231 182,226 Z" fill="#4FC3F7"/>
+        <g clip-path="url(#c3)">
+          <rect x="180" y="224" width="345" height="78" fill="#29B6F6"/>
+          <ellipse cx="280" cy="255" rx="45" ry="22" fill="#0288D1" opacity="0.55"/>
+          <ellipse cx="430" cy="260" rx="55" ry="18" fill="#0277BD" opacity="0.45"/>
+          <path d="M220,248 Q270,240 320,255 Q380,272 440,258 Q490,246 520,262" fill="none" stroke="#01579B" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+          <path d="M240,270 Q290,264 340,275" fill="none" stroke="#0288D1" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
+          <path d="M380,268 Q430,260 480,272" fill="none" stroke="#0288D1" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        </g>
+        <path d="M182,226 L442,226 Q448,226 452,230 L520,284 Q524,287 524,292 L264,292 Q258,292 254,288 L186,234 Q182,231 182,226 Z" fill="none" stroke="#0277BD" stroke-width="1.8"/>
+        <path d="M182,226 L186,234 L254,288 L264,292 L264,300 L196,246 L182,234 Z" fill="#0277BD" opacity="0.35"/>
+        <path d="M264,292 L524,292 L524,300 L264,300 Z" fill="#0277BD" opacity="0.2"/>
+        <line x1="264" y1="300" x2="524" y2="300" stroke="#0277BD" stroke-width="0.7" opacity="0.4"/>
+
+        <!-- CAPA 4 — USO DE SUELO -->
+        <path d="M162,330 L422,330 Q428,330 432,334 L500,388 Q504,391 504,396 L244,396 Q238,396 234,392 L166,338 Q162,335 162,330 Z" fill="rgba(0,0,0,0.09)" transform="translate(3,4)"/>
+        <path d="M162,326 L422,326 Q428,326 432,330 L500,384 Q504,387 504,392 L244,392 Q238,392 234,388 L166,334 Q162,331 162,326 Z" fill="#FFF176"/>
+        <g clip-path="url(#c4)">
+          <rect x="160" y="324" width="345" height="78" fill="#FFEE58"/>
+          <polygon points="168,330 260,326 290,350 240,368 170,362" fill="#A5D6A7" opacity="0.75"/>
+          <polygon points="275,326 380,326 410,350 370,370 255,365" fill="#FFCC02" opacity="0.7"/>
+          <polygon points="400,328 490,330 505,355 470,372 390,368" fill="#FF8A65" opacity="0.7"/>
+          <polygon points="175,360 255,356 270,378 230,395 168,390" fill="#CE93D8" opacity="0.65"/>
+          <polygon points="275,362 380,357 400,378 355,395 260,390" fill="#80DEEA" opacity="0.65"/>
+          <polygon points="410,365 490,360 500,385 465,395 400,390" fill="#FFAB40" opacity="0.65"/>
+        </g>
+        <path d="M162,326 L422,326 Q428,326 432,330 L500,384 Q504,387 504,392 L244,392 Q238,392 234,388 L166,334 Q162,331 162,326 Z" fill="none" stroke="#F9A825" stroke-width="1.8"/>
+        <path d="M162,326 L166,334 L234,388 L244,392 L244,400 L176,346 L162,334 Z" fill="#F9A825" opacity="0.35"/>
+        <path d="M244,392 L504,392 L504,400 L244,400 Z" fill="#F9A825" opacity="0.2"/>
+        <line x1="244" y1="400" x2="504" y2="400" stroke="#F9A825" stroke-width="0.7" opacity="0.4"/>
+
+        <!-- CAPA 5 — RELIEVE / TOPOGRAFÍA -->
+        <path d="M142,430 L402,430 Q408,430 412,434 L480,488 Q484,491 484,496 L224,496 Q218,496 214,492 L146,438 Q142,435 142,430 Z" fill="rgba(0,0,0,0.09)" transform="translate(3,4)"/>
+        <path d="M142,426 L402,426 Q408,426 412,430 L480,484 Q484,487 484,492 L224,492 Q218,492 214,488 L146,434 Q142,431 142,426 Z" fill="#A5D6A7"/>
+        <g clip-path="url(#c5)">
+          <rect x="140" y="424" width="345" height="78" fill="#81C784"/>
+          <path d="M160,460 Q200,444 250,452 Q310,462 360,448 Q410,436 460,450 Q490,458 505,468" fill="none" stroke="#2E7D32" stroke-width="1.8" opacity="0.5"/>
+          <path d="M155,472 Q200,460 255,468 Q315,478 365,464 Q415,452 465,464 Q490,472 505,480" fill="none" stroke="#388E3C" stroke-width="1.5" opacity="0.45"/>
+          <path d="M158,482 Q210,474 265,480 Q325,488 375,476 Q425,464 470,476" fill="none" stroke="#43A047" stroke-width="1.2" opacity="0.4"/>
+          <ellipse cx="320" cy="452" rx="70" ry="22" fill="#FF8A65" opacity="0.35"/>
+          <ellipse cx="320" cy="452" rx="45" ry="14" fill="#FF7043" opacity="0.3"/>
+          <ellipse cx="320" cy="452" rx="25" ry="8" fill="#BF360C" opacity="0.28"/>
+          <ellipse cx="195" cy="472" rx="35" ry="14" fill="#29B6F6" opacity="0.3"/>
+        </g>
+        <path d="M142,426 L402,426 Q408,426 412,430 L480,484 Q484,487 484,492 L224,492 Q218,492 214,488 L146,434 Q142,431 142,426 Z" fill="none" stroke="#388E3C" stroke-width="1.8"/>
+        <path d="M142,426 L146,434 L214,488 L224,492 L224,500 L156,446 L142,434 Z" fill="#2E7D32" opacity="0.35"/>
+        <path d="M224,492 L484,492 L484,500 L224,500 Z" fill="#2E7D32" opacity="0.2"/>
+        <line x1="224" y1="500" x2="484" y2="500" stroke="#2E7D32" stroke-width="0.7" opacity="0.4"/>
+
+        <!-- ETIQUETAS -->
+        <line x1="600" y1="63" x2="600" y2="462" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3 4"/>
+        <line x1="564" y1="63" x2="594" y2="63" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+        <circle cx="597" cy="63" r="3" fill="#E57373"/>
+        <text x="606" y="68" font-family="'Cormorant Garamond', Georgia, serif" font-size="15" font-weight="600" fill="rgba(255,255,255,0.9)">Vectorial</text>
+        <line x1="544" y1="159" x2="594" y2="159" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+        <circle cx="597" cy="159" r="3" fill="#66BB6A"/>
+        <text x="606" y="164" font-family="'Cormorant Garamond', Georgia, serif" font-size="15" font-weight="600" fill="rgba(255,255,255,0.9)">Áreas protegidas</text>
+        <line x1="524" y1="259" x2="594" y2="259" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+        <circle cx="597" cy="259" r="3" fill="#4FC3F7"/>
+        <text x="606" y="264" font-family="'Cormorant Garamond', Georgia, serif" font-size="15" font-weight="600" fill="rgba(255,255,255,0.9)">Hidrografía</text>
+        <line x1="504" y1="359" x2="594" y2="359" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+        <circle cx="597" cy="359" r="3" fill="#FDD835" stroke="#F9A825" stroke-width="1"/>
+        <text x="606" y="364" font-family="'Cormorant Garamond', Georgia, serif" font-size="15" font-weight="600" fill="rgba(255,255,255,0.9)">Uso de suelo</text>
+        <line x1="484" y1="459" x2="594" y2="459" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+        <circle cx="597" cy="459" r="3" fill="#81C784"/>
+        <text x="606" y="464" font-family="'Cormorant Garamond', Georgia, serif" font-size="15" font-weight="600" fill="rgba(255,255,255,0.9)">Relieve</text>
+      </svg>
     </div>
   </div>
 </section>
