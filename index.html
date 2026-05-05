@@ -32,6 +32,17 @@
   .nav-links a:hover { color: var(--verde); }
   .nav-cta { background: var(--verde); color: white; padding: 9px 22px; border-radius: 24px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s; }
   .nav-cta:hover { background: var(--verde-medio); }
+  .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; cursor: pointer; padding: 4px; border: none; background: none; }
+  .nav-hamburger span { display: block; height: 2px; background: var(--verde); border-radius: 2px; transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(248,244,238,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid var(--crema-oscura); padding: 20px 6%; z-index: 99; flex-direction: column; gap: 0; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 16px; color: var(--texto-medio); text-decoration: none; font-weight: 400; padding: 14px 0; border-bottom: 1px solid var(--crema-oscura); transition: color 0.2s; }
+  .mobile-menu a:last-child { border-bottom: none; padding-bottom: 4px; }
+  .mobile-menu a:hover { color: var(--verde); }
+  .mobile-menu .mobile-cta { color: var(--verde); font-weight: 600; }
 
   /* HERO */
   #inicio {
@@ -168,25 +179,80 @@
   .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; flex-wrap: wrap; gap: 8px; }
   .footer-bottom span { font-size: 12px; color: rgba(255,255,255,0.25); font-weight: 300; }
 
-  /* RESPONSIVE */
+  /* RESPONSIVE — TABLET (≤900px) */
   @media (max-width: 900px) {
-    .hero-grid, .sobre-grid, .geo-grid, .footer-grid { grid-template-columns: 1fr; }
-    .servicios-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-grid, .sobre-grid, .geo-grid { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-grid > div:first-child { grid-column: 1 / -1; }
+    .servicios-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
     .clientes-grid { grid-template-columns: repeat(2, 1fr); }
     h1 { font-size: 40px; }
     h2 { font-size: 34px; }
     .nav-links { display: none; }
-    .sobre-foto { height: 300px; }
+    .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    .sobre-foto { height: 280px; }
     .sobre-badge { position: static; margin-top: 16px; }
+    #inicio { padding: 100px 6% 70px; min-height: auto; }
+    .hero-visual { display: none; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; margin-top: 36px; }
+    .geo-grid { padding: 0; }
+    .geo-visual { margin-top: 0; }
+    section { padding: 72px 6%; }
+    #sobre { padding: 72px 6% !important; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .contacto-info { grid-template-columns: repeat(3, 1fr); }
   }
-  @media (max-width: 600px) {
-    .servicios-grid, .clientes-grid { grid-template-columns: 1fr; }
+
+  /* RESPONSIVE — MÓVIL GRANDE (≤640px) */
+  @media (max-width: 640px) {
+    h1 { font-size: 34px; }
+    h2 { font-size: 28px; }
+    .servicios-grid { grid-template-columns: 1fr; gap: 14px; }
+    .clientes-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .hero-stats { gap: 16px; }
+    .stat-num { font-size: 26px; }
+    .hero-badge { font-size: 11px; padding: 5px 11px; }
+    .hero-desc { font-size: 15px; }
+    .hero-btns { flex-direction: column; align-items: flex-start; }
+    .btn-primary, .btn-outline { width: 100%; text-align: center; }
+    section { padding: 56px 5%; }
+    #sobre { padding: 56px 5% !important; }
+    #inicio { padding: 90px 5% 56px; }
+    .sobre-foto { height: 220px; }
+    .sobre-foto svg { width: 90px; height: 90px; }
+    .skills-grid { grid-template-columns: 1fr; gap: 8px; }
+    .geo-title { font-size: 32px; }
+    .geo-layers { gap: 8px; }
+    .geo-layer { padding: 10px 12px; }
+    .contacto-form { padding: 24px 16px; }
     .form-grid { grid-template-columns: 1fr; }
     .form-group.full { grid-column: 1; }
-    .contacto-info { grid-template-columns: 1fr; }
-    .hero-stats { gap: 20px; }
-    .contacto-form { padding: 28px 20px; }
-    section { padding: 60px 5%; }
+    .contacto-info { grid-template-columns: 1fr; gap: 10px; }
+    .footer-bottom { flex-direction: column; text-align: center; gap: 6px; }
+    .section-header { margin-bottom: 36px; }
+    .section-header p { font-size: 14px; }
+  }
+
+  /* RESPONSIVE — MÓVIL PEQUEÑO (≤400px) */
+  @media (max-width: 400px) {
+    h1 { font-size: 30px; }
+    h2 { font-size: 26px; }
+    .clientes-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 4%; height: 60px; }
+    .mobile-menu { top: 60px; }
+    .logo-text { font-size: 17px; }
+    #inicio { padding: 80px 4% 48px; }
+    section { padding: 48px 4%; }
+    #sobre { padding: 48px 4% !important; }
+    .hero-stats { flex-direction: column; gap: 12px; }
+    .stat-item { display: flex; align-items: baseline; gap: 10px; }
+    .stat-label { font-size: 12px; }
+    .contacto-form { padding: 20px 14px; }
+    .servicio-card { padding: 24px 20px; }
+    .cliente-card { padding: 18px 14px; }
+    .geo-desc { font-size: 14px; }
   }
 </style>
 </head>
@@ -224,7 +290,17 @@
     <li><a href="#clientes">Clientes</a></li>
   </ul>
   <a href="#contacto" class="nav-cta">Contactar</a>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Menú móvil">
+  <a href="#sobre" class="mobile-link">Sobre mí</a>
+  <a href="#servicios" class="mobile-link">Servicios</a>
+  <a href="#geomatica" class="mobile-link">Geomática</a>
+  <a href="#clientes" class="mobile-link">Clientes</a>
+  <a href="#contacto" class="mobile-link mobile-cta">Contactar</a>
+</div>
 
 <!-- ══════════════════════════════════
      HERO
@@ -629,6 +705,31 @@
       document.getElementById('form-error').style.display = 'block';
     }
   }
+
+  const hamburger = document.getElementById('nav-hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function toggleMenu(open) {
+    hamburger.classList.toggle('open', open);
+    mobileMenu.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('open');
+    toggleMenu(!isOpen);
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => toggleMenu(false));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      toggleMenu(false);
+    }
+  });
 
   // Permitir enviar con Enter en campos de texto
   document.querySelectorAll('input').forEach(input => {
